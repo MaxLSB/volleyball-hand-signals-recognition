@@ -2,8 +2,8 @@ import cv2
 import os
 import numpy as np
 import mediapipe as mp
-import src.poseDetection as poseDetection
-import src.extraction as extraction
+import utils.poseDetection as poseDetection
+import utils.extraction as extraction
 
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
