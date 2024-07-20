@@ -63,3 +63,4 @@ def data_collection(actions, DATA_PATH, no_sequences, sequence_length, start_fol
                         
         cap.release()
         cv2.destroyAllWindows()
+        

@@ -5,16 +5,17 @@ import utils.extraction as extraction
 import utils.poseDetection as poseDetection
 from models.model import DetectionModel
 import mediapipe as mp
+import torch.nn.functional as F 
 
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
-actions = np.array(['pointL', 'pointR'])
+actions = np.array(['pointL', 'pointR', 'TimeOut', 'OutofBd', 'NetFault', 'Substi'])
 model = DetectionModel(len(actions))
 model.load_state_dict(torch.load('trained_model/refereeSignalsModel.pth'))
 model.eval()
 
-colors = [(245,117,16), (117,245,16), (16,117,245)]
+colors = [(245,117,16), (117,245,16), (16,117,245), (255,0,0), (0,255,0), (0,0,255), (255,255,0), (0,255,255)]
 def prob_viz(res, actions, input_frame, colors):
     output_frame = input_frame.copy()
     for num, prob in enumerate(res):
@@ -27,7 +28,7 @@ def prob_viz(res, actions, input_frame, colors):
 sequence = []
 sentence = []
 predictions = []
-threshold = 0.5
+threshold = 0.7
 
 cap = cv2.VideoCapture(0)
 # Set mediapipe model 
@@ -49,7 +50,13 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         sequence = sequence[-30:]
         
         if len(sequence) == 30:
-            res = model.predict(np.expand_dims(sequence, axis=0))[0]
+            # res = model.predict(np.expand_dims(sequence, axis=0))[0]
+            # print(actions[np.argmax(res)])
+            # predictions.append(np.argmax(res))
+            sequence_tensor = torch.tensor(np.expand_dims(sequence, axis=0), dtype=torch.float32)
+            with torch.no_grad():
+                logits = model(sequence_tensor)
+                res = F.softmax(logits, dim=1).numpy()[0]
             print(actions[np.argmax(res)])
             predictions.append(np.argmax(res))
             
@@ -63,7 +70,7 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
                             sentence.append(actions[np.argmax(res)])
                     else:
                         sentence.append(actions[np.argmax(res)])
-
+                        
             if len(sentence) > 5: 
                 sentence = sentence[-5:]
 

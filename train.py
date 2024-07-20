@@ -2,17 +2,17 @@ import os
 import numpy as np
 import torch
 import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import train_test_split
+from torch.utils.data import DataLoader, TensorDataset
 import utils.preProcess as preProcess
 from models.model import DetectionModel
 
 DATA_PATH = os.path.join('data') # Path for exported data, numpy arrays
-actions = np.array(['pointL', 'pointR']) # Actions that we try to detect
-no_sequences = 30 # Thirty videos worth of data
+actions = np.array(['pointL', 'pointR', 'TimeOut', 'OutofBd', 'NetFault', 'Substi']) # Actions that we try to detect
+no_sequences = 50 # Thirty videos worth of data
 sequence_length = 30 # Videos are going to be 30 frames in length
 start_folder = 1 # Folder start
-num_epochs=300
+num_epochs=200
 batch_size=8
 
 sequences, labels = preProcess.pre_processing(actions, DATA_PATH, sequence_length)
