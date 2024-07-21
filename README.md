@@ -25,18 +25,43 @@ Install the requirements for the app:
 ```
 pip install -r requirements.txt
 ```
+# Test
+
+Detection with your webcam in real time:
+```
+python main.py
+```
+
+# Streamlit local server
+
+<div align="center">
+  <img src="assets/streamlit-1.png" alt="Example" width="800" />
+</div>
+
 Download the 2 exemple videos:
 ```
 bash downloadExamples.sh
-```
-To try the Detection with your webcam in real time:
-```
-python main.py
 ```
 Lauching the streamlit local server (download the 2 example videos for a better experience):
 ```
 streamlit run app.py
 ```
+
+# Train the model with new actions
+
+Change the actions in the 'utils/config.py' file:
+
+Start the Data Collecting process with your webcam (takes some time):
+```
+python data.py
+```
+Train the model:
+```
+python train.py
+```
+
+
+
 
 
 
