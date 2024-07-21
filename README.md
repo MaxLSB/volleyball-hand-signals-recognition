@@ -2,18 +2,18 @@
   <h1>VolleyBall Referee Hand Signals Recognition </h1>
 </div>
 
-# Introduction
+# Introduction 🏐
 
 <div align="center">
   <img src="examples/First.gif" alt="Example" width="700"/>
 </div>
 
-# Hand Signals
+# Hand Signals 
 <div align="center">
   <img src="assets/actions.png" alt="Interface" width="1000"/>
 </div>
 
-# Installation
+# Installation ✨
 
 Use a dedicated environnement to install the librairies.
 
@@ -25,14 +25,14 @@ Install the requirements for the app:
 ```
 pip install -r requirements.txt
 ```
-# Test
+# Test 
 
 Detection with your webcam in real time:
 ```
 python main.py
 ```
 
-# Streamlit local server
+# Streamlit local server 
 
 <div align="center">
   <img src="assets/streamlit-1.png" alt="Example" width="800" />
@@ -47,7 +47,7 @@ Lauching the streamlit local server (download the 2 example videos for a better 
 streamlit run app.py
 ```
 
-# Train the model with new actions
+# Train the model with new actions 
 
 Change the actions in the 'utils/config.py' file:
 
