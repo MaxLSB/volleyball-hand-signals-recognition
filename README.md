@@ -5,12 +5,12 @@
 # Introduction
 
 <div align="center">
-  <img src="examples/First.gif" alt="Example" width="800"/>
+  <img src="examples/First.gif" alt="Example" width="700"/>
 </div>
 
 # Hand Signals
 <div align="center">
-  <img src="assets/actions.png" alt="Interface" width="800"/>
+  <img src="assets/actions.png" alt="Interface" width="1000"/>
 </div>
 
 # Installation
