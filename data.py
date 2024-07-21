@@ -11,8 +11,8 @@ mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
 DATA_PATH = os.path.join('data/')
-actions = np.array(['pointL', 'pointR', 'TimeOut', 'OutofBd', 'NetFault', 'Substi']) # Actions that we try to detect
-no_sequences = 50 # Thirty videos worth of data
+actions = np.array(['Neutral', 'pointL', 'pointR', 'TimeOut', 'OutofBd', 'NetFault', 'DbHit']) # Actions that we try to detect
+no_sequences = 40 # Thirty videos worth of data
 sequence_length = 30 # Videos are going to be 30 frames in length
 start_folder = 1 # Folder start
 
