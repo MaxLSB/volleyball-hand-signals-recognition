@@ -19,7 +19,7 @@ Use a dedicated environnement to install the librairies.
 
 Clone repo :
 ```
-git clone https://github.com/MaxLSB/Volleyball-Referee-Action-Recognition-Deep-Learning.git
+git clone https://github.com/MaxLSB/Volleyball-Referee-Action-Recognition-Model.git
 ```
 Install the requirements for the app:
 ```
