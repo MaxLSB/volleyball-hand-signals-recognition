@@ -1,22 +1,21 @@
 import os
 import shutil
 import time
-import numpy as np
 import mediapipe as mp
 import utils.dataCollection as dataCollection
+from utils.actions import all_actions
+from utils.config import get_paremeters
 
 # Collect data though webcam for each action, save everythin in the dedicated folders !
 
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
-DATA_PATH = os.path.join('data/')
-actions = np.array(['Neutral', 'pointL', 'pointR', 'TimeOut', 'OutofBd', 'NetFault', 'DbHit']) # Actions that we try to detect
-no_sequences = 40 # Thirty videos worth of data
-sequence_length = 30 # Videos are going to be 30 frames in length
-start_folder = 1 # Folder start
-
-
+DATA_PATH = get_paremeters()['DATA_PATH']
+actions = all_actions() # Actions that we try to detect
+no_sequences = get_paremeters()['no_sequences'] # Thirty videos worth of data
+sequence_length = get_paremeters()['sequence_length'] # Videos are going to be 30 frames in length
+start_folder = get_paremeters()['start_folder'] # Folder start
 
 # Check if the folder already exists
 if os.path.isdir(DATA_PATH):
@@ -33,7 +32,9 @@ if os.path.isdir(DATA_PATH):
             os.makedirs(os.path.join(DATA_PATH, actions[i]))
         print("New folder has been created.")
         time.sleep(1)
+        
         dataCollection.data_collection(actions, DATA_PATH, no_sequences, sequence_length, start_folder)
+    
     elif user_input in ["no", "n"]:
         print("The folder has been kept.")
     else:
@@ -45,5 +46,6 @@ else:
             os.makedirs(os.path.join(DATA_PATH, actions[i]))
     print(f"The folder has been created.")
     time.sleep(1)
+    
     dataCollection.data_collection(actions, DATA_PATH, no_sequences, sequence_length, start_folder)
 
