@@ -1,12 +1,16 @@
 import cv2
 import torch
 import numpy as np
+import mediapipe as mp
+import torch.nn.functional as F 
 import utils.extraction as extraction
 import utils.poseDetection as poseDetection
 from models.model import DetectionModel
-import mediapipe as mp
-import torch.nn.functional as F 
 from utils.actions import action_fullname, all_actions
+
+################################################
+# Try the model in real time on your webcam
+################################################
 
 def prob_viz(res, actions, input_frame):
     output_frame = input_frame.copy()
@@ -15,7 +19,7 @@ def prob_viz(res, actions, input_frame):
         
     return output_frame
 
-def main():
+def main(ViewProbabilities=True, ViewLandmarks=True):
     actions = all_actions()
     model = DetectionModel(len(actions))
     model.load_state_dict(torch.load('trained_model/refereeSignalsModel.pth'))
@@ -33,20 +37,17 @@ def main():
 
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    fps = cap.get(cv2.CAP_PROP_FPS)
 
     mp_holistic = mp.solutions.holistic
-    mp_drawing = mp.solutions.drawing_utils
 
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:  
         while cap.isOpened(): 
             ret, frame = cap.read()
-            if not ret:
-                break
             
             image, results = poseDetection.mediapipe_detection(frame, holistic)
             
-            poseDetection.draw_landmarks(image, results) # Uncomment to see the landmarks on the video
+            if ViewLandmarks:
+                poseDetection.draw_landmarks(image, results) # Uncomment to see the landmarks on the video
             
             keypoints = extraction.extract_keypoints(results)
             sequence.append(keypoints)
@@ -81,7 +82,8 @@ def main():
                     printed_sentence = printed_sentence[-3:]
 
                 #Viz probabilities
-                image = prob_viz(res, actions, image)
+                if ViewProbabilities:
+                    image = prob_viz(res, actions, image)
                 
             rect_x1, rect_x2 = (frame_width - 900) // 2, (frame_width + 900) // 2
             rect_y1, rect_y2 = frame_height - 110, frame_height -50
@@ -101,4 +103,4 @@ def main():
         
         
 if __name__ == '__main__':
-    main()
+    main(ViewProbabilities=True, ViewLandmarks=True)

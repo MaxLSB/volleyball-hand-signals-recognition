@@ -2,13 +2,13 @@ import cv2
 import os
 import torch
 import numpy as np
+import tempfile
+import torch.nn.functional as F
+import mediapipe as mp
+from io import BytesIO
 import utils.extraction as extraction
 import utils.poseDetection as poseDetection
 from models.model import DetectionModel
-import mediapipe as mp
-import torch.nn.functional as F
-from io import BytesIO
-import tempfile
 from utils.actions import action_fullname, all_actions
 
 def prob_viz(res, actions, input_frame):
@@ -17,7 +17,7 @@ def prob_viz(res, actions, input_frame):
         cv2.putText(output_frame, action_fullname(actions[num]) + ': ' + str(round(prob, 2)), (0, 185+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
     return output_frame
 
-def ActionDetectionVideo(video_bytes):
+def ActionDetectionVideo(video_bytes, ViewProbabilities=False, ViewLandmarks=False):
     
     actions = all_actions()
     model = DetectionModel(len(actions))
@@ -46,6 +46,7 @@ def ActionDetectionVideo(video_bytes):
     out = cv2.VideoWriter(temp_output_path, fourcc, fps, (frame_width, frame_height))
 
     mp_holistic = mp.solutions.holistic
+    
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while True:
             ret, frame = input_video.read()
@@ -53,6 +54,9 @@ def ActionDetectionVideo(video_bytes):
                 break
             
             image, results = poseDetection.mediapipe_detection(frame, holistic)
+            if ViewLandmarks:
+                poseDetection.draw_landmarks(image, results)
+            
             keypoints = extraction.extract_keypoints(results)
             sequence.append(keypoints)
             sequence = sequence[-30:]
@@ -83,7 +87,8 @@ def ActionDetectionVideo(video_bytes):
                     sentence = sentence[-3:]
                     printed_sentence = printed_sentence[-3:]
 
-                image = prob_viz(res, actions, image)
+                if ViewProbabilities:
+                    image = prob_viz(res, actions, image)
             
             rect_x1, rect_x2 = (frame_width - 900) // 2, (frame_width + 900) // 2
             rect_y1, rect_y2 = frame_height - 110, frame_height -50
