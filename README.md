@@ -38,7 +38,7 @@ python main.py
   <img src="assets/streamlit-1.png" alt="Example" width="800" />
 </div>
 
-Download the 2 exemple videos:
+Download the 2 example videos:
 ```
 bash downloadExamples.sh
 ```
@@ -60,10 +60,4 @@ Train the model:
 python train.py
 ```
 
-
-
-
-
-
-
-Scripts must be executed from the root folder of the project, be careful about the paths!
+_(Scripts must be executed from the root folder of the project, be careful about the paths!)_
