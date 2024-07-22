@@ -64,7 +64,7 @@ def main(ViewProbabilities=True, ViewLandmarks=True):
                 else :
                     predictions.append(0) # Neutral label index (change if needed)
 
-                # Check if at least 15 out of the last 20 predictions are the same
+                # Check if at least 15 out of the last 20 predictions are the same as the predicted label
                 if predictions[-20:].count(predicted_label) >= 15:
                         if len(sentence) > 0: 
                             # We don't want to detect the same action multiple times for a single motion
@@ -81,7 +81,6 @@ def main(ViewProbabilities=True, ViewLandmarks=True):
                     sentence = sentence[-3:]
                     printed_sentence = printed_sentence[-3:]
 
-                #Viz probabilities
                 if ViewProbabilities:
                     image = prob_viz(res, actions, image)
                 
