@@ -31,6 +31,7 @@ Detection with your webcam in real time:
 ```
 python main.py
 ```
+_(You can adjust ViewProbabilities and ViewLandmarks' values at the bottom of the file. They are set to 'True' by Default)_
 
 # Streamlit local server 
 
