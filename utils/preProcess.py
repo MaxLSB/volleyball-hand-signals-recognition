@@ -11,6 +11,9 @@ def pre_processing(actions, DATA_PATH, sequence_length):
                 res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
                 window.append(res)
             sequences.append(window)
-            labels.append(label_map[action])
+            sig_label = [0]*(len(actions)-1) # -1 because we don't want to include the 'Nothing' action
+            if action != 'Nothing':
+                sig_label[label_map[action]] = 1
+            labels.append(sig_label)
             
     return sequences, labels

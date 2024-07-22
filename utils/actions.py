@@ -1,7 +1,10 @@
 import numpy as np
 
 def all_actions():
-    return np.array(['Neutral', 'pointL', 'pointR', 'Substi', 'DbHit', 'OutofB'])
+    return np.array(['pointR', 'pointL', 'Substi', 'DbHit', 'OutofB']) # same order as all_actions_training
+
+def all_actions_training():
+    return np.array(['pointR', 'pointL', 'Substi', 'DbHit', 'OutofB', 'Nothing']) # We add the a 'Nothing' action for training
 
 def action_fullname(action):
     if action == 'pointL':
@@ -14,5 +17,3 @@ def action_fullname(action):
         return 'Double Hit'
     elif action == 'OutofB':
         return 'Out of Bounds'
-    else:
-        return 'Neutral'

@@ -3,7 +3,7 @@ import shutil
 import time
 import mediapipe as mp
 import utils.dataCollection as dataCollection
-from utils.actions import all_actions
+from utils.actions import all_actions_training
 from utils.config import get_paremeters
 
 # Collect data though webcam for each action, save everythin in the dedicated folders !
@@ -12,7 +12,7 @@ mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
 DATA_PATH = get_paremeters()['DATA_PATH']
-actions = all_actions() # Actions that we try to detect
+actions = all_actions_training() # Actions that we try to detect
 no_sequences = get_paremeters()['no_sequences'] # Thirty videos worth of data
 sequence_length = get_paremeters()['sequence_length'] # Videos are going to be 30 frames in length
 start_folder = get_paremeters()['start_folder'] # Folder start

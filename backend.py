@@ -3,7 +3,6 @@ import os
 import torch
 import numpy as np
 import tempfile
-import torch.nn.functional as F
 import mediapipe as mp
 from io import BytesIO
 import utils.extraction as extraction
@@ -14,7 +13,8 @@ from utils.actions import action_fullname, all_actions
 def prob_viz(res, actions, input_frame):
     output_frame = input_frame.copy()
     for num, prob in enumerate(res):
-        cv2.putText(output_frame, action_fullname(actions[num]) + ': ' + str(round(prob, 2)), (0, 185+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
+        cv2.putText(output_frame, action_fullname(actions[num]) + ': ' + str(round(prob.item(), 2)), (0, 185+num*40), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,255,255), 2, cv2.LINE_AA)
+        
     return output_frame
 
 def ActionDetectionVideo(video_bytes, ViewProbabilities=False, ViewLandmarks=False):
@@ -64,26 +64,24 @@ def ActionDetectionVideo(video_bytes, ViewProbabilities=False, ViewLandmarks=Fal
             if len(sequence) == 30:
                 sequence_tensor = torch.tensor(np.expand_dims(sequence, axis=0), dtype=torch.float32)
                 with torch.no_grad():
-                    logits = model(sequence_tensor)
-                    res = F.softmax(logits, dim=1).numpy()[0]
-                    predicted_label = np.argmax(res)
-                if res[predicted_label] > threshold:
+                    res = model(sequence_tensor)[0]
+                    predicted_label = res.argmax(dim=0).item()
+                    proba = res[predicted_label].item()
+                if proba > threshold: 
                     predictions.append(predicted_label)
-                else:
-                    predictions.append(0)  # Neutral label index
 
-                if predictions[-20:].count(predicted_label) >= 15:
-                    if len(sentence) > 0:
-                        if actions[predicted_label] != sentence[-1]:
-                            sentence.append(actions[predicted_label])
-                            if actions[predicted_label] != 'Neutral':
+                # Check if at least 15 out of the last 20 predictions are the same as the predicted label
+                if predictions[-15:].count(predicted_label) >= 12:
+                        if len(sentence) > 0: 
+                            # We don't want to detect the same action multiple times for a single motion
+                            if actions[predicted_label] != sentence[-1]:
+                                sentence.append(actions[predicted_label])               
                                 printed_sentence.append(action_fullname(actions[predicted_label]))
-                    else:
-                        sentence.append(actions[predicted_label])
-                        if actions[predicted_label] != 'Neutral':
+                        else:
+                            sentence.append(actions[predicted_label])
                             printed_sentence.append(action_fullname(actions[predicted_label]))
         
-                if len(sentence) > 3:
+                if len(sentence) > 3: 
                     sentence = sentence[-3:]
                     printed_sentence = printed_sentence[-3:]
 
