@@ -24,7 +24,7 @@ The current trained model detects 6 different positions :
   - **Point Left :** 1 point is given to the team on the left
   - **Point Right :** 1 point is given to the team on the right
   - **Out of Bounds :** a fault where the ball landed outside the court's boundary lines
-  - **Double hit :** a fault where a player contacts the ball twice in succession, or the ball contacts various parts of the player's body consecutively
+  - **Double hit :** a fault where a player contacts the ball twice in succession, or the ball contacts various parts of the player's body consecutively (right hand only)
   - **Substitution :** the process of replacing one player on the court with another player from the bench
 
 The data creation process is time-consuming, because each action is associated with a sequence of frames (and thus with the corresponding key feature values for each frame), so the dataset is small. As a result, I focused on detecting a limited number of actions for now.
