@@ -36,7 +36,7 @@ Use a dedicated environnement to install the librairies.
 
 Clone repo :
 ```
-git clone https://github.com/MaxLSB/Volleyball-Referee-Action-Recognition-Model.git
+git clone https://github.com/MaxLSB/Volleyball-Referee-Hand-Signals-Recognition-Model.git
 ```
 Install the requirements for the app:
 ```
