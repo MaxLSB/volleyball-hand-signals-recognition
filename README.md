@@ -1,16 +1,19 @@
 <div align="center">
-  <h1>VolleyBall Referee Hand Signals Recognition </h1>
+  <h1>VolleyBall Referee Hand Signals Recognition 🏐 </h1>
 </div>
 
-# Introduction 🏐
-
 <div align="center">
-  <img src="examples/First.gif" alt="Example" width="700"/>
+  <img src="assets/Intro.png" alt="Example" width="500"/>
+</div>
+
+# Introduction
+<div align="center">
+  <img src="examples/First.gif" alt="Example" width="500"/>
 </div>
 
 # Hand Signals 
 <div align="center">
-  <img src="assets/actions.png" alt="Interface" width="1000"/>
+  <img src="assets/actions.png" alt="Interface" width="800"/>
 </div>
 
 # Installation ✨
