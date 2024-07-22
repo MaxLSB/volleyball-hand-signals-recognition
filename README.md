@@ -26,7 +26,6 @@ The current trained model detects 6 different positions :
   - **Out of Bounds :** a fault where the ball landed outside the court's boundary lines
   - **Double hit :** a fault where a player contacts the ball twice in succession, or the ball contacts various parts of the player's body consecutively
   - **Substitution :** the process of replacing one player on the court with another player from the bench
-  - **Neutral :** Neutral position of the referee
 
 The data creation process is time-consuming, because each action is associated with a sequence of frames (and thus with the corresponding key feature values for each frame), so the dataset is small. As a result, I focused on detecting a limited number of actions for now.
 _(The results are still good because the key features of the chosen actions are very distinct from one another.)_
