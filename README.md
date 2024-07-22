@@ -53,7 +53,7 @@ streamlit run app.py
 
 # Train the model with new actions 
 
-Change the actions in the 'utils/config.py' file:
+Change the actions in the 'utils/config.py' file.
 
 Start the Data Collecting process with your webcam (takes some time):
 ```
