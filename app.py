@@ -73,8 +73,6 @@ def main():
         st.success('The example video has been downloaded!')
 
     st.caption('By Maxence Lasbordes')
-        
-    st.image('assets/streamlit-banner.png', use_column_width=True)
     
 if __name__ == '__main__':
     main()
