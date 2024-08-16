@@ -6,6 +6,11 @@
 
 The goal of this project is to detect, classify, and display the meaning of the hand signals of a volleyball referee. Going further, this project could, for instance, help those unfamiliar with hand signal meanings by providing an AR overlay for live audience displays or automate score updates during matches using the detected signals.
 
+You can access and test the model here:
+```
+https://vb-hand-signals-recognition.streamlit.app/
+```
+
 # Information
 
 There is very little data (almost none, actually) available on the internet for such a task because professional volleyball games typically show the entire court and rarely focus on the referee at the right moment. So I had to make **my own dataset** using open cv and mediapipe for hands tracking/pose detection. By extracting and saving the landmarks (key features) of the relevant body parts, I was able to create a dataset with my chosen actions and trained the model using an LSTMs and CNNs because each action is a sequence of frames. Since the data is in the form of vectors associated with the positions of body points detected by MediaPipe, we require significantly less data to train our model and get decent results compared to if we were using images as input.
