@@ -11,7 +11,7 @@ The goal of this project is to detect, classify, and display the meaning of the 
 There is very little data (almost none, actually) available on the internet for such a task because professional volleyball games typically show the entire court and rarely focus on the referee at the right moment. So I had to make **my own dataset** using open cv and mediapipe for hands tracking/pose detection. By extracting and saving the landmarks (key features) of the relevant body parts, I was able to create a dataset with my chosen actions and trained the model using an **LSTM-based neural network** because each action is a sequence of frames. Since the data is in the form of vectors associated with the positions of body points detected by MediaPipe, we require significantly less data to train our model and get decent results compared to if we were using images as input (and CNNs).
 
 <div align="center">
-  <img src="examples/First.gif" alt="Example" width="500"/>
+  <img src="examples/example.gif" alt="Example" width="500"/>
 </div>
 
 # Hand Signals 
@@ -42,28 +42,25 @@ Install the requirements for the app:
 ```
 pip install -r requirements.txt
 ```
-# Test 
+
+# Streamlit server
+
+<div align="center">
+  <img src="assets/streamlit-1.png" alt="Example" width="800" />
+</div>
+
+You can access and test the model here:
+```
+https://vb-hand-signals-recognition.streamlit.app/
+```
+
+# Test with Webcam
 
 Detection with your webcam in real time:
 ```
 python main.py
 ```
 _(You can adjust ViewProbabilities and ViewLandmarks' values at the bottom of the file. They are set to 'True' by Default)_
-
-# Streamlit local server 
-
-<div align="center">
-  <img src="assets/streamlit-1.png" alt="Example" width="800" />
-</div>
-
-Download the 2 example videos:
-```
-bash downloadExamples.sh
-```
-Lauching the streamlit local server (download the 2 example videos for a better experience):
-```
-streamlit run app.py
-```
 
 # Train the model with new actions 
 
