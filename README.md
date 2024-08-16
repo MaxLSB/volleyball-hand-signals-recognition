@@ -8,7 +8,7 @@ The goal of this project is to detect, classify, and display the meaning of the 
 
 # Information
 
-There is very little data (almost none, actually) available on the internet for such a task because professional volleyball games typically show the entire court and rarely focus on the referee at the right moment. So I had to make **my own dataset** using open cv and mediapipe for hands tracking/pose detection. By extracting and saving the landmarks (key features) of the relevant body parts, I was able to create a dataset with my chosen actions and trained the model using an **LSTM-based neural network** because each action is a sequence of frames. Since the data is in the form of vectors associated with the positions of body points detected by MediaPipe, we require significantly less data to train our model and get decent results compared to if we were using images as input (and CNNs).
+There is very little data (almost none, actually) available on the internet for such a task because professional volleyball games typically show the entire court and rarely focus on the referee at the right moment. So I had to make **my own dataset** using open cv and mediapipe for hands tracking/pose detection. By extracting and saving the landmarks (key features) of the relevant body parts, I was able to create a dataset with my chosen actions and trained the model using an LSTMs and CNNs because each action is a sequence of frames. Since the data is in the form of vectors associated with the positions of body points detected by MediaPipe, we require significantly less data to train our model and get decent results compared to if we were using images as input.
 
 <div align="center">
   <img src="examples/First.gif" alt="Example" width="500"/>
