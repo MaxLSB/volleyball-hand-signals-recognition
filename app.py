@@ -17,7 +17,7 @@ def download_video(video_url):
 
 def main():
     
-    st.image('assets/st-banner.png', use_column_width=True)
+    st.image('assets/streamlit-banner.png', use_column_width=True)
     st.subheader('VolleyBall Hand Signals Recognition')
     
     col1, col2 = st.columns(2)
@@ -74,7 +74,7 @@ def main():
 
     st.caption('By Maxence Lasbordes')
         
-    st.image('assets/st-banner.png', use_column_width=True)
+    st.image('assets/streamlit-banner.png', use_column_width=True)
     
 if __name__ == '__main__':
     main()
