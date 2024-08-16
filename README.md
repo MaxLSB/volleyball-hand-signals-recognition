@@ -6,10 +6,7 @@
 
 The goal of this project is to detect, classify, and display the meaning of the hand signals of a volleyball referee. Going further, this project could, for instance, help those unfamiliar with hand signal meanings by providing an AR overlay for live audience displays or automate score updates during matches using the detected signals.
 
-You can access and test the model here:
-```
-https://vb-hand-signals-recognition.streamlit.app/
-```
+**You can access and test the model [here](https://vb-hand-signals-recognition.streamlit.app/).**
 
 # Information
 
