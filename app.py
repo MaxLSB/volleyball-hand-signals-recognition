@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from io import BytesIO
 from backend import ActionDetectionVideo
+import requests
 
 
 def processing_video(uploaded_file, ViewProbabilities, ViewLandmarks):
@@ -9,101 +10,71 @@ def processing_video(uploaded_file, ViewProbabilities, ViewLandmarks):
     processed_video = ActionDetectionVideo(video_bytes, ViewProbabilities, ViewLandmarks)
     return processed_video
 
+def download_video(video_url):
+    response = requests.get(video_url)
+    response.raise_for_status() 
+    return response.content  
+
 def main():
     
-    st.header('VolleyBall Hand Signals Recognition')
-    st.caption('By Maxence Lasbordes')
+    st.image('assets/st-banner.png', use_column_width=True)
+    st.subheader('VolleyBall Hand Signals Recognition')
     
-    option = st.sidebar.selectbox(
-        'Choose an option:',
-        ('Use Example Videos', 'Use Your Own Video')
-    )
+    col1, col2 = st.columns(2)
+
+    with col1:
+        ViewProbabilities = st.checkbox("View Probabilities", value=True)
+
+    with col2:
+        ViewLandmarks = st.checkbox("View Landmarks", value=True)
     
-    st.markdown(
-        """
-        <style>
-        video {
-            max-width: 80%;
-            height: auto;
-        }
-        </style>
-        
-        """,
-        unsafe_allow_html=True
-    )
+    uploaded_file = st.file_uploader("Choose a video file to process...", type=["mp4", "avi", "mov"])
     
-    if option == 'Use Example Videos':
-        st.subheader("Use Example Videos")
-        video_choice = st.selectbox(
-            'Choose a video:',
-            ('Example 1', 'Example 2')
-        )
-        file_ex1 = 'examples/example-1.mp4'
-        file_ex2 = 'examples/example-2.mp4'
-        
-        if os.path.isfile(file_ex1) and os.path.isfile(file_ex2):
-            if video_choice == 'Example 1':
-                video_path = file_ex1
-            elif video_choice == 'Example 2':
-                video_path = file_ex2
-            
-            if st.checkbox("View Probabilities"):
-                ViewProbabilities = True
-            else:
-                ViewProbabilities = False
-            
-            if st.checkbox("View Landmarks"):
-                ViewLandmarks = True
-            else:
-                ViewLandmarks = False
-            
-            if st.button("Load Video into Model"):
-                status_placeholder = st.empty()
-                status_placeholder.write('Processing your video... (this may take a few seconds)')
-                
-                uploaded_file = open(video_path, 'rb')
-                processed_video = processing_video(uploaded_file, ViewProbabilities, ViewLandmarks)
-                status_placeholder.write('Your video is ready!')
-                st.download_button(
-                    label="Download Processed Video",
-                    data=processed_video,
-                    file_name="processed_video.mp4",
-                    mime="video/mp4"
-                )
-        
-            st.video(video_path)
-                      
-        else:
-            st.write("Please download the example videos with the 'downloadExamples.sh' script !!!")
-        
-    elif option == 'Use Your Own Video':
-        st.subheader("Use Your Own Video")
-        
-        if st.checkbox("View Probabilities"):
-            ViewProbabilities = True
-        else:
-            ViewProbabilities = False
-        
-        if st.checkbox("View Landmarks"):
-            ViewLandmarks = True
-        else:
-            ViewLandmarks = False
-        
-        uploaded_file = st.file_uploader("Choose a video file...", type=["mp4", "avi", "mov"])
-        
-        if uploaded_file:
+    if 'processed_video' not in st.session_state:
+        st.session_state.processed_video = None
+    
+    if uploaded_file:
+        if st.session_state.processed_video is None:
             status_placeholder = st.empty()
-            status_placeholder.write('Processing your video... (this may take a few seconds)')
-            processed_video = processing_video(uploaded_file, ViewProbabilities, ViewLandmarks)
-            status_placeholder.write('Your video is ready!')
-            st.download_button(
-                        label="Download Processed Video",
-                        data=processed_video,
-                        file_name="processed_video.mp4",
-                        mime="video/mp4"
-                    )
-        st.image('examples/First.gif')
-        st.caption('Exemple of a processed video')
+            status_placeholder.warning('Processing your video... (this may take a few seconds)')
+            st.session_state.processed_video = processing_video(uploaded_file, ViewProbabilities, ViewLandmarks)
+            status_placeholder.success('The video has been processed!')
+        
+        if st.download_button(
+                label="Download Processed Video",
+                data=st.session_state.processed_video,
+                file_name="processed_video.mp4",
+                mime="video/mp4"
+            ):
+            st.success('The processed video has been downloaded!')
+
+    st.write("---")
+    
+    video_choice = st.selectbox(
+        'Select an example video to download (if you don\'t have one):',
+        ('Example 1', 'Example 2')
+    )
+    url_ex2="https://www.dropbox.com/scl/fi/4o58quf3yctc0u2e4d814/example-1.mp4?rlkey=y0uopqydalesz0bzvxzab8rta&st=su594icm&dl=1"
+    url_ex1="https://www.dropbox.com/scl/fi/twpo9rwxi5dofxacg0f57/example-2.mp4?rlkey=j98urfyfvf3bz6ntprjzl4wul&st=aqe0d40w&dl=1"
+    
+    if video_choice == 'Example 1':
+        url = url_ex1
+        video_data = download_video(url)
+    elif video_choice == 'Example 2':
+        url = url_ex2
+        video_data = download_video(url)
+
+    if st.download_button(
+        label="Download Example Video",
+        data=video_data,
+        file_name="example.mp4",
+        mime="video/mp4"
+    ):
+        st.success('The example video has been downloaded!')
+
+    st.caption('By Maxence Lasbordes')
+        
+    st.image('assets/st-banner.png', use_column_width=True)
     
 if __name__ == '__main__':
     main()

@@ -6,7 +6,7 @@ def get_paremeters():
         'no_sequences': 50,
         'start_folder': 1,
         'sequence_length': 30,
-        'num_epochs': 100,
+        'num_epochs': 70,
         'batch_size': 8
     }
     return parameters
