@@ -19,8 +19,6 @@ def main():
     
     st.set_page_config(page_title="Volleyball Signals Recognition ", page_icon="🏐", layout="centered")
     
-    st.set_page_config(page_title="Volleyball Signals Recognition ", page_icon="🏐", layout="centered")
-    
     st.image('assets/streamlit-banner.png', use_column_width=True)
     st.subheader('VolleyBall Hand Signals Recognition')
     
