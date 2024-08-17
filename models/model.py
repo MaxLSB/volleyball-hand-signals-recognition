@@ -24,13 +24,13 @@ class DetectionModel(torch.nn.Module):
         x = self.pool(torch.relu(self.conv2(x)))
         x = self.dropout(x)
         
-        # Flatten for LSTM (batch_size, sequence_length, num_features)
+        # Flatten for LSTM (batch_size, sequence_length, input_size)
         x = x.transpose(1, 2)
         
         # LSTM layers
         x, _ = self.lstm(x)
         
-        # Use the output from the last time step
+        # Shape is now (batch_size, input_size)
         x = x[:, -1, :]
     
         out = torch.sigmoid(self.fc(x))

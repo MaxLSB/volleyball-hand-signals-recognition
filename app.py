@@ -19,7 +19,9 @@ def main():
     
     st.set_page_config(page_title="Volleyball Signals Recognition ", page_icon="🏐", layout="centered")
     
-    st.image('assets/st-banner.png', use_column_width=True)
+    st.set_page_config(page_title="Volleyball Signals Recognition ", page_icon="🏐", layout="centered")
+    
+    st.image('assets/streamlit-banner.png', use_column_width=True)
     st.subheader('VolleyBall Hand Signals Recognition')
     
     col1, col2 = st.columns(2)
@@ -49,6 +51,7 @@ def main():
                 mime="video/mp4"
             ):
             st.success('The processed video has been downloaded!')
+            st.session_state.processed_video = None
 
     st.write("---")
     
@@ -75,8 +78,6 @@ def main():
         st.success('The example video has been downloaded!')
 
     st.caption('By Maxence Lasbordes')
-        
-    st.image('assets/st-banner.png', use_column_width=True)
     
 if __name__ == '__main__':
     main()
