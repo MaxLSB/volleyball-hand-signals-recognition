@@ -47,6 +47,7 @@ def main():
                 mime="video/mp4"
             ):
             st.success('The processed video has been downloaded!')
+            st.session_state.processed_video = None
 
     st.write("---")
     
