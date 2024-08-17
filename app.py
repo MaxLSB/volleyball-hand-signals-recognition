@@ -17,6 +17,8 @@ def download_video(video_url):
 
 def main():
     
+    st.set_page_config(page_title="Volleyball Signals Recognition ", page_icon="🏐", layout="centered")
+    
     st.image('assets/st-banner.png', use_column_width=True)
     st.subheader('VolleyBall Hand Signals Recognition')
     
