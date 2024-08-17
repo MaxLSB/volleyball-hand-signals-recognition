@@ -48,6 +48,7 @@ def main():
             ):
             st.success('The processed video has been downloaded!')
             st.session_state.processed_video = None
+            uploaded_file = None
 
     st.write("---")
     
