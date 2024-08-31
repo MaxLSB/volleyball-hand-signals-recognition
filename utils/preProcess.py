@@ -8,7 +8,7 @@ def pre_processing(actions, DATA_PATH, sequence_length):
         for sequence in np.array(os.listdir(os.path.join(DATA_PATH, action))).astype(int):
             window = []
             for frame_num in range(sequence_length):
-                res = np.load(os.path.join(DATA_PATH, action, str(sequence), "{}.npy".format(frame_num)))
+                res = np.load(os.path.join(DATA_PATH, action, str(sequence), f"{frame_num}.npy"))
                 window.append(res)
             sequences.append(window)
             sig_label = [0]*(len(actions)-1) # -1 because we don't want to include the 'Nothing' action
