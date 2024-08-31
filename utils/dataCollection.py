@@ -21,18 +21,17 @@ def data_collection(actions, DATA_PATH, no_sequences, sequence_length, start_fol
     width = 1920
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    # Set mediapipe model 
+    # Set mediapipe
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         
-        # NEW LOOP
         # Loop through actions
         for action in actions:
-            # Loop through sequences aka videos
+            # Loop through sequences
             for sequence in range(start_folder, start_folder+no_sequences):
-                # Loop through video length aka sequence length
+                # Loop through the frames
                 for frame_num in range(sequence_length):
 
-                    # Read feed
+                    # Read frame
                     ret, frame = cap.read()
 
                     # Make detections
@@ -41,27 +40,26 @@ def data_collection(actions, DATA_PATH, no_sequences, sequence_length, start_fol
                     # Draw landmarks
                     poseDetection.draw_landmarks(image, results)
                     
-                    # NEW Apply wait logic
                     if frame_num == 0: 
                         cv2.putText(image, 'STARTING COLLECTION', (400,300), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255, 0), 4, cv2.LINE_AA)
                         cv2.putText(image, 'Collecting frames for {} Video Number {}'.format(action, sequence), (200,50), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4, cv2.LINE_AA)
-                        # Show to screen
+                        
                         cv2.imshow('OpenCV Feed', image)
                         cv2.waitKey(500)
                     else: 
                         cv2.putText(image, 'Collecting frames for {} Video Number {}'.format(action, sequence), (200,50), 
                                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4, cv2.LINE_AA)
-                        # Show to screen
+                        
                         cv2.imshow('OpenCV Feed', image)
                     
-                    # NEW Export keypoints
+                    # Extract keypoints
                     keypoints = extraction.extract_keypoints(results)
                     npy_path = os.path.join(DATA_PATH, action, str(sequence), str(frame_num))
                     np.save(npy_path, keypoints)
 
-                    # Break gracefully
+                    # Exit if needed
                     if cv2.waitKey(10) & 0xFF == ord('q'):
                         break
                         
