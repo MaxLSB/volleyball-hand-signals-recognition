@@ -32,7 +32,7 @@ The current trained model detects 6 different positions :
 The data creation process is time-consuming, because each action is associated with a sequence of frames (and thus with the corresponding key feature values for each frame), so the dataset is small. As a result, I focused on detecting a limited number of actions for now.
 _(The results are still good because the key features of the chosen actions are very distinct from one another.)_
 
-# Installation ✨
+# Installation
 
 Use a dedicated environnement to install the librairies.
 
